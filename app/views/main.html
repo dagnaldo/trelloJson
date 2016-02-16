@@ -1,0 +1,85 @@
+<!-- <div class="container" id="form_box">
+    <form ng-submit="importJson(jsonData)" layout="column">
+      <md-input-container layout="row">
+        <label>Insert link to json here!</label>
+        <input ng-model="jsonData" required>
+      </md-input-container>
+      <md-content layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-primary" type="submit" >
+          SEND
+        </md-button>
+      </md-content>
+    </form>
+</div>
+
+
+<md-content ng-show="JsonData">
+  <div ng-repeat="data in JsonData track by $index">
+    <p>{{data}}</p>
+  </div>
+</md-content>
+
+
+<form name="form">
+  <md-button class="md-raised" ngf-select ng-model="file" name="file"
+    ngf-accept="'*'" ngf-max-size="20MB">Select</md-button>
+  <button type="submit" ng-click="submit()">submit</button>
+</form>
+
+
+
+ -->
+<div class="container">
+  <div ng-if="!listar">
+    <h1>JSON Trello:</h1>
+    <input type="file" on-read-file="getContent($fileContent)" />
+    <hr/>
+  </div>
+
+  <div ng-if="listar" ng-hide="errormsg">
+    <h3>Lista recebida, escolha a coluna a ser apresentada:</h3>
+    <form ng-submit="showTable(selectedList)">
+      <md-radio-group ng-model="selectedList">
+        <md-radio-button ng-repeat="list in list" value="{{list.id}}">{{list.name}}</md-radio-button>
+      </md-radio-group>
+      <hr />
+      <md-button type="submit" class="md-raised md-primary">enviar</md-button>
+    </form>
+    <hr/>
+  </div>
+
+  <div ng-show="showInfo">
+    <div layout="row" layout-align="end end">      
+      <md-button 
+        layout-align="end end"
+        class="md-raised md-primary"
+        ng-csv="csvData" 
+        csv-header="keys" 
+        filename="trello.csv">
+          Exportar para CSV
+      </md-button>
+      <br/>
+    </div>
+
+    <table class="table table-hover table-responsive" class="container">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th ng-repeat='key in keys' ng-value="{{key}}">{{key}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="data in dataJson">
+          <td><b>{{$index + 1}}</b></td>
+          <td ng-repeat='key in keys'>{{data[key]}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div ng-if="errormsg">
+    <h3>{{errormsg}}</h3>
+  </div>
+
+</div>
