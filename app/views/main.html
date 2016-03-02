@@ -32,7 +32,7 @@
  -->
 <div class="container">
   <div ng-if="!listar">
-    <h1>JSON Trello:</h1>
+    <h1>Arquivo Trello:<small> (formato .json)</small></h1>
     <input type="file" on-read-file="getContent($fileContent)" />
     <hr/>
   </div>
@@ -50,12 +50,13 @@
   </div>
 
   <div ng-show="showInfo">
-    <div layout="row" layout-align="end end">      
-      <md-button 
+    <div layout="row" layout-align="end end">
+      <md-button
         layout-align="end end"
         class="md-raised md-primary"
-        ng-csv="csvData" 
-        csv-header="keys" 
+        ng-csv="csvData"
+        field-separator=";" 
+        csv-header="keys"
         filename="trello.csv">
           Exportar para CSV
       </md-button>
@@ -72,7 +73,11 @@
       <tbody>
         <tr ng-repeat="data in dataJson">
           <td><b>{{$index + 1}}</b></td>
-          <td ng-repeat='key in keys'>{{data[key]}}</td>
+          <td>{{data.desc}}</td>
+          <td>{{data.name}}</td>
+          <td>{{data.labels}}</td>
+          <td><a href="{{data.shortUrl}}" target="_blank">{{data.shortUrl}}</a></td>
+          <!-- <td ng-repeat='key in keys' href="">{{data[key]}}</td> -->
         </tr>
       </tbody>
     </table>
